@@ -8,13 +8,16 @@ const bird = document.getElementById("bird")
 
 const scoreText = document.getElementById("scoreText")
 let score = 0
+let birdSpeed = 4.5
+let birdSpeedString = "4.5s"
 SetText("click to start!")
 
 
 var isJumping = false
 let gameOver = true
 
-document.addEventListener('click', () => jump())
+// changed so jump triggers on mousedown instead of click
+document.addEventListener('mousedown', () => jump())
 
 
 setInterval(function () { Main()}, 10)
@@ -25,13 +28,19 @@ function Main()
     {
         score = score + 1;
         SetText("Score: " + score)
-
+        if(birdSpeed > 2.5){
+            birdSpeed -= 0.001
+        }
+        birdSpeedString = birdSpeed.toString() + "s"
+        changeBirdSpeed(birdSpeedString)
         CheckGameOver()
     }
 }
 
 
-function jump()
+
+
+function jump(): void
 {
     if(gameOver === false)
     {
@@ -125,5 +134,11 @@ function SetText(s: string)
     if(scoreText)
     {
         scoreText.textContent = s
+    }
+}
+
+function changeBirdSpeed(newDuration: string) {
+    if(bird){
+        bird.style.animationDuration = newDuration;
     }
 }
