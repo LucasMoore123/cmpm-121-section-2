@@ -4,7 +4,8 @@ import './style.css'
 
 const dino = document.getElementById("dino")
 const cactus = document.getElementById("cactus")
-const bird = document.getElementById("bird")
+const bird1 = document.getElementById("bird")
+const bird2 = document.getElementById("bird2")
 
 const scoreText = document.getElementById("scoreText")
 let score = 0
@@ -29,7 +30,7 @@ function Main()
         score = score + 1;
         SetText("Score: " + score)
         if(birdSpeed > 2.5){
-            birdSpeed -= 0.001
+            birdSpeed = 4.5 - (score * 0.0005)
         }
         birdSpeedString = birdSpeed.toString() + "s"
         changeBirdSpeed(birdSpeedString)
@@ -69,14 +70,15 @@ function RemoveJump()
 function RemoveObstacles()
 {
     cactus?.classList.remove("cactusMove")
-    bird?.classList.remove("birdMove")
+    bird1?.classList.remove("birdMove")
+    bird2?.classList.remove("bird2Move")
 }
 
 
 function CheckGameOver()
 {
 
-    if(gameOver == false && dino != null && cactus != null && bird != null)
+    if(gameOver == false && dino != null && cactus != null && bird1 != null && bird2 != null)
     {
         //get is dinosaur jumping
         let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"))
@@ -85,7 +87,9 @@ function CheckGameOver()
         let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"))
 
         //get bird position
-        let birdLeft = parseInt(window.getComputedStyle(bird).getPropertyValue("left"))
+        let birdLeft = parseInt(window.getComputedStyle(bird1).getPropertyValue("left"))
+
+        let bird2Left = parseInt(window.getComputedStyle(bird2).getPropertyValue("left"))
 
         //detect cactus collision
         if(dinoTop >= 150 && Math.abs(cactusLeft) < 7)
@@ -103,7 +107,7 @@ function CheckGameOver()
         }
 
         //detect bird collision
-        if(dinoTop <= 80 && dinoTop >= -20 && birdLeft >= -60 && birdLeft <= 60)
+        if((dinoTop <= 80 && dinoTop >= -20 && birdLeft >= -60 && birdLeft <= 60) || (bird2Left >= -60 && bird2Left <= 60 && dinoTop <= 80 && dinoTop >= -20))
         {
             //end game
             console.log("player died!")
@@ -126,7 +130,8 @@ function StartGame()
     gameOver = false
     score = 0
     cactus?.classList.add("cactusMove")
-    bird?.classList.add("birdMove")
+    bird1?.classList.add("birdMove")
+    bird2?.classList.add("bird2Move")
 }
 
 function SetText(s: string)
@@ -138,7 +143,7 @@ function SetText(s: string)
 }
 
 function changeBirdSpeed(newDuration: string) {
-    if(bird){
-        bird.style.animationDuration = newDuration;
+    if(bird1){
+        bird1.style.animationDuration = newDuration;
     }
 }

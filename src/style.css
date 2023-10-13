@@ -105,6 +105,20 @@
   
 }
 
+#bird2
+{
+  width: 50px;
+  height: 50px;
+  position: relative;
+  top: -40px;
+  left: 900px;
+
+  background-image: url(/assets/bird2.png);
+  background-size: 50px 50px;
+  
+}
+
+
 .birdMove
 {
   animation: birdMove 4.5s linear infinite;
@@ -122,6 +136,25 @@
     left: -60px;
   }
 }
+
+.bird2Move
+{
+  animation: bird2Move 6s linear infinite;
+}
+
+@keyframes bird2Move
+{
+  0%
+  {
+    left: 900px;
+  }
+
+  100%
+  {
+    left: -60px;
+  }
+}
+
 
 
 #scoreText
